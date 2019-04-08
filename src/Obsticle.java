@@ -15,6 +15,8 @@ public class Obsticle {
 	PImage img;
 	private int whichImage;
 	protected boolean OffScreen = false;
+	private float NO_SET_XSPEED;
+	protected boolean stop = true;
 
 	public Obsticle(float x, float y, float w, float h, float xspeed, float yspeed, double q, PImage img, PApplet win) {
 		this.x = x;
@@ -33,13 +35,24 @@ public class Obsticle {
 	}
 
 	public void moveX() {
+	if(stop == false) {
 		x -= xspeed;
-
+	}
 		if (i == MAX_SPEED_FOR_TIME) {
 			xspeed = xspeed + 1;
+			NO_SET_XSPEED = xspeed;
 			MAX_SPEED_FOR_TIME += 100;
 		}
+		
 
+	}
+	public void resetX() {
+		if (OffScreen() == true) {
+			distance = (int)(Math.random()*100);
+			x = 1200 + distance;
+			stop = true;
+		}
+		
 	}
 
 	public void moveY() {
@@ -74,6 +87,9 @@ public class Obsticle {
 
 	public float getObstacleXSpeed() {
 		return xspeed;
+	}
+	public void setStop(boolean stop) {
+		this.stop = stop;
 	}
 
 	public void displayCounter() {

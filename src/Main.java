@@ -13,7 +13,7 @@ public class Main extends PApplet {
 	ArrayList<Dots> dots = new ArrayList<Dots>();
 	PImage img1 = loadImage("C:\\Users\\cstrigl928\\Desktop\\cactus1.png");
 	PImage img2 = loadImage("C:\\Users\\cstrigl928\\Desktop\\cactus2.png");
-	PImage img3 = loadImage("C:\\Users\\cstrigl928\\Desktop\\cactus1.png");
+	PImage img3 = loadImage("C:\\Users\\cstrigl928\\Desktop\\FireBallR.png");
 	int Rand;
 	int whichObject = (int) (Math.random() * 2);
 	int once = 0;
@@ -39,8 +39,12 @@ public class Main extends PApplet {
 		stroke(120);
 		line(0, 543, 1200, 543);
 		fill(0);
-		
+		float a = d.getx();
+		float r = d.gety();
+		float g = d.getw();
+		float s = d.geth();
 		if (whichObject == 0) {
+			c1.setStop(false);
 			c1.displayCounter();
 			c1.update();
 			c1.draw();
@@ -49,11 +53,17 @@ public class Main extends PApplet {
 			u = c1.getObstacley();
 			l = c1.getObstacleh();
 			k = c1.getObstaclew();
+			d.isXIntervalOverlapping(a, g, u, k);
+			d.isYIntervalOverlapping(r, s, t, l);
+			if (d.isHitting(c1) == true) {
+				System.out.println("U Dead!!");
+				System.exit(0);
+			}
 			
 		}
 
 		if (whichObject == 2) {
-
+			c2.setStop(false);
 			t = c2.getObstaclex();
 			u = c2.getObstacley();
 			l = c2.getObstacleh();
@@ -62,7 +72,7 @@ public class Main extends PApplet {
 		}
 
 		if (whichObject == 1) {
-
+			F.setStop(false);
 			t = F.getObstaclex();
 			u = F.getObstacley();
 			l = F.getObstacleh();
@@ -71,27 +81,19 @@ public class Main extends PApplet {
 			F.moveX();
 			F.moveY();
 			F.update();
+			d.isXIntervalOverlapping(a, g, u, k);
+			d.isYIntervalOverlapping(r, s, t, l);
+			if (d.isHitting(F) == true) {
+				System.out.println("U Dead!!");
+				System.exit(0);
+			}
 		}
 
-		float a = d.getx();
-		float r = d.gety();
-		float g = d.getw();
-		float s = d.geth();
+		
 		d.draw();
 		d.jump();
 		d.ground();
-
-	
-		F.draw();
-		F.moveX();
-		F.moveY();
-		F.update();
-		d.isXIntervalOverlapping(a, g, u, k);
-		d.isYIntervalOverlapping(r, s, t, l);
-		if (d.isHitting(c1) == true) {
-			System.out.println("U Dead!!");
-			System.exit(0);
-		}
+		
 
 		for (int i = 0; i < dots.size(); i++) {
 			dots.get(i).draw();
@@ -105,6 +107,10 @@ public class Main extends PApplet {
 	public int NewObstacle() {
 		if (c2.OffScreen() == true || c1.OffScreen() == true  || F.OffScreen() == true ) {
 			whichObject = (int) (Math.random() * 2);
+			c1.resetX();
+			c2.resetX();
+			F.resetX();
+			
 			System.out.println(whichObject);
 		}
 
